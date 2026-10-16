@@ -1,10 +1,19 @@
 "use client";
 
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useProgress } from "@/lib/progress";
 import { Logo } from "@/components/Logo";
-import { IcArrow, IcCheck, IcRight, IcShield, IcUser } from "@/components/icons";
+import {
+  IcArrow,
+  IcCheck,
+  IcReset,
+  IcRight,
+  IcShield,
+  IcUser,
+} from "@/components/icons";
 import { CLUSTERS, UPCOMING_CLUSTERS } from "@/content/clusters";
+import { buildDeck, dueCards } from "@/lib/deck";
 import type { Cluster } from "@/types/content";
 
 function clusterProgress(cluster: Cluster, status: Record<string, string>) {
@@ -15,7 +24,9 @@ function clusterProgress(cluster: Cluster, status: Record<string, string>) {
 
 export function HubView() {
   const router = useRouter();
-  const { status, testPassed, user } = useProgress();
+  const { status, testPassed, srs, user } = useProgress();
+  const deck = useMemo(() => buildDeck(), []);
+  const due = dueCards(deck, srs).length;
 
   return (
     <div className="screen screen--anim">
@@ -46,6 +57,25 @@ export function HubView() {
         <span className="node__go">
           <IcRight />
         </span>
+      </button>
+
+      <button className="reviewcard" onClick={() => router.push("/review")}>
+        <span className="reviewcard__icon" aria-hidden="true">
+          <IcReset />
+        </span>
+        <span className="reviewcard__main">
+          <span className="title-sm">Повторение глоссария</span>
+          <span className="caption mute">
+            {due > 0 ? "Карточек к повторению" : "Всё повторено"}
+          </span>
+        </span>
+        {due > 0 ? (
+          <span className="reviewcard__badge">{due}</span>
+        ) : (
+          <span className="node__go">
+            <IcRight />
+          </span>
+        )}
       </button>
 
       <div className="col" style={{ gap: "var(--space-4)" }}>

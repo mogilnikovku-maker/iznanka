@@ -332,6 +332,25 @@ button {
 .orderitem--no { box-shadow: inset 0 0 0 2px var(--danger); }
 .orderitem--no .orderitem__mark { color: var(--danger); }
 
+/* Интервальное повторение */
+.flashcard { flex: 1; min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--space-4); padding: var(--space-8) var(--space-5); border-radius: var(--radius-xl); background: var(--bg-200); box-shadow: inset 0 0 0 1px var(--line); }
+.flashcard__def { max-width: 36ch; }
+.gradegrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+.gradegrid .btn { padding: 0 var(--space-3); }
+.grade--again { background: var(--danger); color: var(--on-neon); }
+.grade--hard { background: var(--bg-300); color: var(--ink); }
+.grade--good { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+.grade--easy { background: var(--neon); color: var(--on-neon); }
+
+/* Карточка повторения на хабе */
+.reviewcard { display: grid; grid-template-columns: var(--size-tap) 1fr auto; align-items: center; column-gap: var(--space-4); width: 100%; padding: var(--space-4) var(--space-5); border: 0; border-radius: var(--radius-lg); background: var(--bg-200); box-shadow: inset 0 0 0 1.5px var(--line-strong); color: var(--ink); text-align: left; cursor: pointer; transition: box-shadow 0.15s ease, transform 0.15s ease; }
+.reviewcard:hover { box-shadow: inset 0 0 0 1.5px var(--neon); }
+.reviewcard:active { transform: scale(0.99); }
+.reviewcard:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.reviewcard__icon { width: var(--size-tap); height: var(--size-tap); flex: none; display: grid; place-items: center; border-radius: var(--radius-full); background: var(--bg-300); color: var(--ink); }
+.reviewcard__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.reviewcard__badge { flex: none; min-width: 28px; height: 28px; padding: 0 var(--space-2); display: grid; place-items: center; border-radius: var(--radius-full); background: var(--neon); color: var(--on-neon); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
 @media (max-width: 440px) {
   .stage { padding: 0; }
   .phone { width: 100%; height: 100dvh; border-radius: 0; box-shadow: none; }

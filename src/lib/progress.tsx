@@ -11,14 +11,42 @@ import {
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { CLUSTERS } from "@/content/clusters";
-import type { ProgressData, TopicStatus } from "@/types/content";
+import type {
+  ProgressData,
+  SrsCard,
+  SrsGrade,
+  TopicStatus,
+} from "@/types/content";
 
 const LS_KEY = "iznanka_progress_v1";
 
 function emptyProgress(): ProgressData {
   const status: Record<string, TopicStatus> = {};
   for (const c of CLUSTERS) for (const t of c.topics) status[t.id] = "new";
-  return { status, testPassed: {} };
+  return { status, testPassed: {}, srs: {} };
+}
+
+const DAY = 86_400_000;
+
+// Упрощённый SM-2: по оценке пересчитываем ease/interval/due.
+function schedule(prev: SrsCard | undefined, grade: SrsGrade): SrsCard {
+  const now = Date.now();
+  let ease = prev?.ease ?? 2.5;
+  let interval = prev?.interval ?? 0;
+  if (grade === "again") {
+    ease = Math.max(1.3, ease - 0.2);
+    return { ease, interval: 0, due: now + 10 * 60 * 1000 };
+  }
+  if (grade === "hard") {
+    ease = Math.max(1.3, ease - 0.15);
+    interval = interval ? Math.max(1, interval * 1.2) : 1;
+  } else if (grade === "good") {
+    interval = interval ? interval * ease : 1;
+  } else {
+    ease = ease + 0.1;
+    interval = interval ? interval * ease * 1.3 : 2;
+  }
+  return { ease, interval, due: now + interval * DAY };
 }
 
 function loadLocal(): ProgressData {
@@ -30,6 +58,7 @@ function loadLocal(): ProgressData {
     return {
       status: { ...base.status, ...(parsed.status ?? {}) },
       testPassed: { ...base.testPassed, ...(parsed.testPassed ?? {}) },
+      srs: { ...(parsed.srs ?? {}) },
     };
   } catch {
     return base;
@@ -49,9 +78,11 @@ type Ctx = {
   user: User | null;
   status: Record<string, TopicStatus>;
   testPassed: Record<string, boolean>;
+  srs: Record<string, SrsCard>;
   openTopic: (topicId: string) => void; // «new» → «progress»
   masterTopic: (topicId: string) => void; // → «done»
   passTest: (clusterId: string) => void;
+  gradeCard: (key: string, grade: SrsGrade) => void;
   reset: () => void;
   signInWithEmail: (email: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
@@ -121,6 +152,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         ? {
             status: { ...local.status, ...remote.status },
             testPassed: { ...local.testPassed, ...remote.testPassed },
+            srs: { ...(local.srs ?? {}), ...(remote.srs ?? {}) },
           }
         : local;
 
@@ -182,6 +214,15 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     [update],
   );
 
+  const gradeCard = useCallback(
+    (key: string, grade: SrsGrade) =>
+      update((p) => ({
+        ...p,
+        srs: { ...(p.srs ?? {}), [key]: schedule((p.srs ?? {})[key], grade) },
+      })),
+    [update],
+  );
+
   const reset = useCallback(() => update(() => emptyProgress()), [update]);
 
   const signInWithEmail = useCallback(
@@ -209,9 +250,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     user,
     status: data.status,
     testPassed: data.testPassed,
+    srs: data.srs ?? {},
     openTopic,
     masterTopic,
     passTest,
+    gradeCard,
     reset,
     signInWithEmail,
     signOut,

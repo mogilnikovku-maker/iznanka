@@ -119,8 +119,18 @@ export type CaseSim = {
 
 export type TopicStatus = "new" | "progress" | "done";
 
+// Карточка интервального повторения (упрощённый SM-2).
+export type SrsCard = {
+  ease: number; // коэффициент лёгкости
+  interval: number; // текущий интервал в днях
+  due: number; // timestamp следующего показа
+};
+
+export type SrsGrade = "again" | "hard" | "good" | "easy";
+
 // Прогресс пользователя — тот же формат в localStorage и в Supabase (JSONB).
 export type ProgressData = {
   status: Record<string, TopicStatus>;
   testPassed: Record<string, boolean>;
+  srs?: Record<string, SrsCard>; // ключ — термин глоссария
 };
