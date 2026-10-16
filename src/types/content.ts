@@ -36,11 +36,33 @@ export type TestOption = {
   feedback: string;
 };
 
-export type TestQuestion = {
+// Один выбор (по умолчанию).
+export type SingleQuestion = {
   id: string;
+  kind?: "single";
   question: string;
   options: TestOption[];
 };
+
+// Выбрать все верные.
+export type MultiQuestion = {
+  id: string;
+  kind: "multi";
+  question: string;
+  options: TestOption[];
+  feedback: string; // общий разбор после проверки
+};
+
+// Расставить шаги по порядку (items заданы в ПРАВИЛЬНОМ порядке).
+export type OrderQuestion = {
+  id: string;
+  kind: "order";
+  question: string;
+  items: string[];
+  feedback: string;
+};
+
+export type TestQuestion = SingleQuestion | MultiQuestion | OrderQuestion;
 
 export type ClusterTest = {
   // Порог прохождения: минимум верных ответов. По умолчанию — все.

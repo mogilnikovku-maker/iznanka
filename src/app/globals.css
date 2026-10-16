@@ -317,6 +317,21 @@ button {
 .bubble--poor { box-shadow: inset 0 0 0 1.5px var(--danger); }
 .bubble--poor .bubble__verdict { color: var(--danger); }
 
+/* Вопрос-упорядочивание */
+.orderlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.orderitem { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); background: var(--bg-200); box-shadow: inset 0 0 0 1.5px var(--line-strong); color: var(--ink); }
+.orderitem__num { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: var(--radius-full); background: var(--bg-300); color: var(--ink); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.orderitem__text { flex: 1; }
+.orderitem__ctrl { flex: none; display: flex; gap: var(--space-1); }
+.orderitem__ctrl .iconbtn { width: 36px; height: 36px; background: var(--bg-300); }
+.orderitem__ctrl .iconbtn:disabled { opacity: 0.4; cursor: default; }
+.orderitem__mark { flex: none; }
+.orderitem--ok { box-shadow: inset 0 0 0 2px var(--neon); }
+.orderitem--ok .orderitem__num { background: var(--neon); color: var(--on-neon); }
+.orderitem--ok .orderitem__mark { color: var(--neon); }
+.orderitem--no { box-shadow: inset 0 0 0 2px var(--danger); }
+.orderitem--no .orderitem__mark { color: var(--danger); }
+
 @media (max-width: 440px) {
   .stage { padding: 0; }
   .phone { width: 100%; height: 100dvh; border-radius: 0; box-shadow: none; }
