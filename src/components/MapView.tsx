@@ -12,6 +12,7 @@ import {
   IcReset,
   IcUser,
 } from "@/components/icons";
+import { CLUSTERS } from "@/content/clusters";
 import type { Cluster, TopicStatus } from "@/types/content";
 
 const STATE_LABEL: Record<TopicStatus, string> = {
@@ -24,6 +25,9 @@ export function MapView({ cluster }: { cluster: Cluster }) {
   const router = useRouter();
   const { status, testPassed, reset, user } = useProgress();
 
+  const clusterNo = String(
+    Math.max(0, CLUSTERS.findIndex((c) => c.id === cluster.id)) + 1,
+  ).padStart(2, "0");
   const topics = cluster.topics;
   const total = topics.length;
   const done = topics.filter((t) => status[t.id] === "done").length;
@@ -64,7 +68,7 @@ export function MapView({ cluster }: { cluster: Cluster }) {
       </div>
 
       <section className="card">
-        <span className="card__over overline">Кластер 01</span>
+        <span className="card__over overline">Кластер {clusterNo}</span>
         <h2 className="title-md">{cluster.title}</h2>
         <p className="card__text body">{cluster.description}</p>
         <div className="progress">
@@ -155,7 +159,7 @@ export function MapView({ cluster }: { cluster: Cluster }) {
         <span className="card__over overline">Сквозной кейс</span>
         <div className="case">
           <span className="case__ava title-sm" aria-hidden="true">
-            А
+            {cluster.avatar.name.charAt(0)}
           </span>
           <div className="case__main">
             <h3 className="title-sm">{cluster.avatar.name}</h3>

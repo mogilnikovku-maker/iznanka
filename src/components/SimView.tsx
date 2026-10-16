@@ -82,7 +82,7 @@ export function SimView({ cluster, topic }: { cluster: Cluster; topic: Topic }) 
       <div className="chat">
         <div className="chat__who caption mute">
           <span className="case__ava title-sm" aria-hidden="true">
-            А
+            {cluster.avatar.name.charAt(0)}
           </span>
           {cluster.avatar.name}
         </div>

@@ -130,7 +130,7 @@ export function TestView({ cluster }: { cluster: Cluster }) {
       <section className="card">
         <div className="case">
           <span className="case__ava title-sm" aria-hidden="true">
-            А
+            {cluster.avatar.name.charAt(0)}
           </span>
           <div className="case__main">
             <h3 className="title-sm">{cluster.avatar.name}</h3>
