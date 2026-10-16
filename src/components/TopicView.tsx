@@ -209,6 +209,30 @@ function TheoryTab({ topic, onDone }: { topic: Topic; onDone: () => void }) {
           ))}
         </dl>
       </div>
+      {topic.references && topic.references.length > 0 && (
+        <div className="section">
+          <span className="section__over overline">Доказательная база</span>
+          <ul className="gloss">
+            {topic.references.map((r, k) => (
+              <li className="gloss__row" key={k}>
+                {r.url ? (
+                  <a
+                    className="title-sm term"
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {r.source}
+                  </a>
+                ) : (
+                  <span className="title-sm">{r.source}</span>
+                )}
+                {r.note && <span className="gloss__def body">{r.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="foot">
         <button className="btn btn--block label" onClick={onDone}>
           В кабинет <IcArrow sm />

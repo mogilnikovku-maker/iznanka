@@ -6,6 +6,13 @@ export type GlossaryItem = {
   definition: string;
 };
 
+// Доказательная база: источник/гайдлайн, на который опирается тема.
+export type Reference = {
+  source: string; // автор, год, название или гайдлайн
+  note?: string; // чем полезен / что подтверждает
+  url?: string; // ссылка, если есть
+};
+
 export type TopicPractice = {
   psychoeducation: string; // «Сказать клиенту»
   mistake: string; // «Частая ошибка»
@@ -19,6 +26,7 @@ export type Topic = {
   longread: string; // Теоретическая база
   practice: TopicPractice; // В кабинете
   glossary: GlossaryItem[];
+  references?: Reference[]; // Доказательная база
 };
 
 export type TestOption = {
