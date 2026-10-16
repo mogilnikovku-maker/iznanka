@@ -87,6 +87,7 @@ export function TopicView({
             backToMap();
           }}
           onGoTest={() => router.push(`/test/${cluster.id}`)}
+          onSim={() => router.push(`/sim/${topic.id}`)}
         />
       )}
     </div>
@@ -248,12 +249,14 @@ function PracticeTab({
   canTest,
   onMaster,
   onGoTest,
+  onSim,
 }: {
   topic: Topic;
   isDone: boolean;
   canTest: boolean;
   onMaster: () => void;
   onGoTest: () => void;
+  onSim: () => void;
 }) {
   const p = topic.practice;
   return (
@@ -265,6 +268,23 @@ function PracticeTab({
         </h3>
         <p className="callout__text reading">{p.psychoeducation}</p>
       </section>
+
+      {topic.simulation && (
+        <button className="simlaunch" onClick={onSim}>
+          <span className="simlaunch__icon" aria-hidden="true">
+            <IcVoice />
+          </span>
+          <span className="simlaunch__main">
+            <span className="title-sm">{topic.simulation.title}</span>
+            <span className="caption mute">
+              Кейс-симуляция: потренируйте реплики
+            </span>
+          </span>
+          <span className="node__go">
+            <IcArrow sm />
+          </span>
+        </button>
+      )}
       <section className="callout">
         <h3 className="callout__head overline">
           <IcX sm />

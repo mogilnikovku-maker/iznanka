@@ -295,6 +295,28 @@ button {
 .steps__item { display: flex; align-items: flex-start; gap: var(--space-3); color: var(--ink-soft); }
 .steps__num { flex: none; width: 24px; height: 24px; display: grid; place-items: center; border-radius: var(--radius-full); background: var(--bg-300); color: var(--ink); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
+/* Запуск кейс-симуляции */
+.simlaunch { display: grid; grid-template-columns: var(--size-tap) 1fr auto; align-items: center; column-gap: var(--space-4); width: 100%; padding: var(--space-4) var(--space-5); border: 0; border-radius: var(--radius-lg); background: var(--neon-soft); box-shadow: inset 0 0 0 1.5px var(--neon); color: var(--ink); text-align: left; cursor: pointer; transition: transform 0.15s ease; }
+.simlaunch:active { transform: scale(0.99); }
+.simlaunch:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.simlaunch__icon { width: var(--size-tap); height: var(--size-tap); flex: none; display: grid; place-items: center; border-radius: var(--radius-full); background: var(--neon); color: var(--on-neon); }
+.simlaunch__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+/* Чат кейс-симуляции */
+.chat { display: flex; flex-direction: column; gap: var(--space-3); }
+.chat__who { display: flex; align-items: center; gap: var(--space-2); }
+.chat__who .case__ava { width: 28px; height: 28px; }
+.bubble { max-width: 85%; padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); }
+.bubble--client { align-self: flex-start; background: var(--bg-200); border-bottom-left-radius: var(--radius-sm); color: var(--ink); }
+.bubble--me { align-self: flex-end; background: var(--bg-300); border-bottom-right-radius: var(--radius-sm); color: var(--ink); }
+.bubble--fb { align-self: flex-end; display: flex; flex-direction: column; gap: 4px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--line-strong); color: var(--ink-soft); }
+.bubble__verdict { display: flex; align-items: center; gap: 6px; text-transform: uppercase; }
+.bubble--good { box-shadow: inset 0 0 0 1.5px var(--neon); }
+.bubble--good .bubble__verdict { color: var(--neon); }
+.bubble--ok .bubble__verdict { color: var(--ink-mute); }
+.bubble--poor { box-shadow: inset 0 0 0 1.5px var(--danger); }
+.bubble--poor .bubble__verdict { color: var(--danger); }
+
 @media (max-width: 440px) {
   .stage { padding: 0; }
   .phone { width: 100%; height: 100dvh; border-radius: 0; box-shadow: none; }

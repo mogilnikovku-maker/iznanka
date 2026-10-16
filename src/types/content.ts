@@ -27,6 +27,7 @@ export type Topic = {
   practice: TopicPractice; // В кабинете
   glossary: GlossaryItem[];
   references?: Reference[]; // Доказательная база
+  simulation?: CaseSim; // Кейс-симуляция (блок «В кабинете»)
 };
 
 export type TestOption = {
@@ -67,6 +68,31 @@ export type ClusterStub = {
   id: string;
   title: string;
   description: string;
+};
+
+// Кейс-симуляция: ветвящийся диалог с «клиентом».
+export type SimOptionQuality = "good" | "ok" | "poor";
+
+export type SimOption = {
+  text: string; // реплика терапевта
+  quality: SimOptionQuality;
+  feedback: string; // разбор выбора
+  next: string | null; // id следующего узла или null — конец
+};
+
+export type SimNode = {
+  id: string;
+  client: string; // реплика клиента
+  options: SimOption[];
+};
+
+export type CaseSim = {
+  id: string;
+  title: string;
+  intro: string;
+  start: string; // id стартового узла
+  nodes: SimNode[];
+  outro: string;
 };
 
 export type TopicStatus = "new" | "progress" | "done";
