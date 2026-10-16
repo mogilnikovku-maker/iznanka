@@ -278,6 +278,23 @@ button {
 .swipe__card { touch-action: pan-y; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease; }
 .swipe__card--dragging { transition: none; cursor: grabbing; }
 
+/* Модуль безопасности: карточка на хабе */
+.safetycard { display: grid; grid-template-columns: var(--size-tap) 1fr auto; align-items: center; column-gap: var(--space-4); width: 100%; padding: var(--space-4) var(--space-5); border: 0; border-radius: var(--radius-lg); background: var(--bg-200); box-shadow: inset 0 0 0 1.5px var(--line-strong); color: var(--ink); text-align: left; cursor: pointer; transition: box-shadow 0.15s ease, transform 0.15s ease; }
+.safetycard:hover { box-shadow: inset 0 0 0 1.5px var(--neon); }
+.safetycard:active { transform: scale(0.99); }
+.safetycard:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.safetycard__icon { width: var(--size-tap); height: var(--size-tap); flex: none; display: grid; place-items: center; border-radius: var(--radius-full); background: var(--bg-300); color: var(--neon); }
+.safetycard__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+/* Экстренный блок */
+.emergency { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-radius: var(--radius-lg); background: var(--neon-soft); box-shadow: inset 0 0 0 1.5px var(--neon); color: var(--ink); }
+.emergency__icon { flex: none; color: var(--neon); display: grid; place-items: center; }
+
+/* Нумерованные шаги */
+.steps { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-2); list-style: none; padding: 0; }
+.steps__item { display: flex; align-items: flex-start; gap: var(--space-3); color: var(--ink-soft); }
+.steps__num { flex: none; width: 24px; height: 24px; display: grid; place-items: center; border-radius: var(--radius-full); background: var(--bg-300); color: var(--ink); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
 @media (max-width: 440px) {
   .stage { padding: 0; }
   .phone { width: 100%; height: 100dvh; border-radius: 0; box-shadow: none; }

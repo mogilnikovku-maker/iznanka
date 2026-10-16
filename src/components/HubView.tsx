@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useProgress } from "@/lib/progress";
 import { Logo } from "@/components/Logo";
-import { IcArrow, IcCheck, IcRight, IcUser } from "@/components/icons";
+import { IcArrow, IcCheck, IcRight, IcShield, IcUser } from "@/components/icons";
 import { CLUSTERS, UPCOMING_CLUSTERS } from "@/content/clusters";
 import type { Cluster } from "@/types/content";
 
@@ -34,6 +34,19 @@ export function HubView() {
         <span className="section__over overline">Фундаментальное обучение психологии</span>
         <h1 className="title-lg">Карта курсов</h1>
       </div>
+
+      <button className="safetycard" onClick={() => router.push("/safety")}>
+        <span className="safetycard__icon" aria-hidden="true">
+          <IcShield />
+        </span>
+        <span className="safetycard__main">
+          <span className="title-sm">Оценка риска и кризис</span>
+          <span className="caption mute">Как заметить и маршрутизировать риск</span>
+        </span>
+        <span className="node__go">
+          <IcRight />
+        </span>
+      </button>
 
       <div className="col" style={{ gap: "var(--space-4)" }}>
         {CLUSTERS.map((cluster, i) => {
